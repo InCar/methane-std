@@ -1,0 +1,20 @@
+language: minimal
+
+branches:
+    only:
+        - master
+        - dev
+
+cache:
+    directories:
+        - $HOME/protobuf
+
+install:
+    - if [ ! -f "$HOME/protobuf/bin/protoc" ];
+          then (wget -P $HOME/protobuf https://github.com/protocolbuffers/protobuf/releases/download/v3.11.2/protoc-3.11.2-linux-x86_64.zip
+                && unzip -d $HOME/protobuf $HOME/protobuf/protoc-3.11.2-linux-x86_64.zip);
+      fi
+
+scripts:
+    - mkdir build
+    - $HOME/protobuf/bin/protoc -I HelloV1 --java_out=build HelloV1/*.proto

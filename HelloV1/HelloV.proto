@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package com.incarcloud.std;
+
+message HelloRequestV1{
+    // vin
+    string vin = 1;
+}
+
+message HelloResponseV1{
+    // 成功返回正值,失败返回负值
+    int32 res=1;
+}

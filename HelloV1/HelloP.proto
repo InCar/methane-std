@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+import "HelloV.proto";
+
+package com.incarcloud.std;
+
+service HelloServiceV1{
+    rpc hello(HelloRequestV1) returns(HelloResponseV1);
+}
