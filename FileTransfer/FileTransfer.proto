@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package com.incarcloud.std.filetransfer;
+
+message ResourceInfoRequest{
+    //文件资源唯一标识符(用于区别不同的资源之间)
+    string id= 1 ;
+}
+
+message ResourceInfoResponse{
+    //文件etag(用于表示文件资源是否产生变动,每次文件变动生成新的etag;第一次请求为空,后续的断点续传必须传入第一次请求的etag)
+    string etag=1;
+    //文件总长度
+    int32 len=2;
+}
+
+message ResourceDataRequest{
+    //文件资源唯一标识符(用于区别不同的资源之间)
+    string id= 1 ;
+    //文件etag(用于表示文件资源是否产生变动,每次文件变动生成新的etag;第一次请求为空,后续的断点续传必须传入第一次请求的etag)
+    string etag=2;
+    //资源开始位置(0代表从头,包括)
+    int32 start=3;
+    //资源开始位置(-1代表到结束,不包括)
+    int32 end=4;
+}
+
+message ResourceDataResponse{
+    //响应编码(1:成功;2:资源不存在;3:资源已经变动(etag不一致);3:其他失败原因)
+    int32 code = 1;
+    //数据内容
+    bytes data = 2;
+}
+
+
+service FileTransferService{
+    //请求资源信息
+    rpc info(ResourceInfoRequest) returns (ResourceInfoResponse);
+
+    //请求资源内容
+    rpc data(ResourceDataRequest) returns (ResourceDataResponse);
+
+}
