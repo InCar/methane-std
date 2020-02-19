@@ -12,10 +12,10 @@ message ResourceInfoPullRequest{
 message ResourceInfoPullResponse{
     //响应编码(1:成功;2:资源不存在;3:其他失败原因)
     string code=1;
-    //资源etag(代表资源有无变动的唯一码)
-    string etag =2 ;
-    //资源类型(1:完整资源;2:不完整资源)
-    int32 type =3;
+    //资源版本(若资源产生更新则版本会累加)
+    int32 version =2 ;
+    //是否完整资源
+    bool complete =3;
     //资源碎片信息(包头不包尾)
     //完整的资源只包含一个碎片(例如大小为1kb资源表示为0-1024)
     //不完整的资源包含多个碎片(例如大小为1kb资源可能表示为0-10,10-100,120-200,500-1000,1000-1024)
@@ -26,8 +26,8 @@ message ResourceInfoPullResponse{
 message ResourceDataPullRequest{
     //资源唯一标识符(用于区别不同的资源之间)
     string id= 1 ;
-    //资源etag(用于表示文件资源是否产生变动,每次文件变动生成新的etag;第一次请求为空,后续的断点续传必须传入第一次请求的etag)
-    string etag=2;
+    //资源版本
+    int32 version=2;
     //资源开始位置(0代表从头,包括)
     int32 start=3;
     //资源开始位置(-1代表到结束,不包括)
@@ -36,10 +36,12 @@ message ResourceDataPullRequest{
 
 //资源数据拉取响应
 message ResourceDataPullResponse{
-    //响应编码(1:成功;2:资源不存在;3:资源已经变动(etag不一致);3:其他失败原因)
+    //响应编码(1:成功;2:资源不存在;3:拉取资源内容的片段不存在;3:其他失败原因)
     int32 code = 1;
+    //最新资源版本
+    int32 version=2;
     //数据内容
-    bytes data = 2;
+    bytes data = 3;
 }
 
 //资源信息生成请求
