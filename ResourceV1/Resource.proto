@@ -30,7 +30,7 @@ message ResourceDataPullRequest{
     int32 version=2;
     //资源开始位置(0代表从头,包括)
     int32 start=3;
-    //资源开始位置(-1代表到结束,不包括)
+    //资源结束位置(不包括)
     int32 end=4;
 }
 
