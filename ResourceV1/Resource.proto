@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package com.incarcloud.std.resource_1;
+package com.incarcloud.resource_1.std;
 
 //资源信息拉取请求
 message ResourceInfoPullRequest{
