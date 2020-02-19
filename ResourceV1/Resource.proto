@@ -36,10 +36,8 @@ message ResourceDataPullRequest{
 
 //资源数据拉取响应
 message ResourceDataPullResponse{
-    //响应编码(1:成功;2:资源不存在;3:拉取资源内容的片段不存在;4:其他失败原因)
+    //响应编码(1:成功;2:资源不存在;3:拉取资源内容的片段不存在;4:资源内容已经变动,需要重新获取资源信息;5:其他失败原因)
     int32 code = 1;
-    //最新资源信息版本
-    int32 version=2;
     //数据内容
     bytes data = 3;
 }
